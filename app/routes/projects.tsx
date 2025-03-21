@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
-import ProjectGallery, { ProjectCube } from "~/components/ProjectGallery";
+import ProjectGallery from "~/components/ProjectGallery";
 import { projects, getAllTechnologies, getAllProjectTypes, getProjectsByType } from "~/models/project";
 import type { Project } from "~/models/project";
 
@@ -58,7 +58,6 @@ export default function Projects() {
 	const { projects, technologies, projectTypes, activeTypeFilter, activeTechFilter } = useLoaderData<typeof loader>();
 
 	const [searchParams, setSearchParams] = useSearchParams();
-	const [viewMode, setViewMode] = useState<"gallery" | "cube">("gallery");
 	const [animateFilters, setAnimateFilters] = useState(false);
 
 	// URL 파라미터 업데이트 함수
@@ -108,22 +107,6 @@ export default function Projects() {
 							{activeTypeFilter !== "all" ? `${activeTypeFilter} 유형의 ` : ""}
 							프로젝트를 표시합니다.
 						</p>
-					</div>
-
-					{/* 뷰 모드 토글 */}
-					<div className="flex gap-2">
-						<button
-							onClick={() => setViewMode("gallery")}
-							className={`px-4 py-2 rounded-lg font-medium text-sm ${viewMode === "gallery" ? "bg-blue-600 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300"}`}
-						>
-							갤러리 뷰
-						</button>
-						<button
-							onClick={() => setViewMode("cube")}
-							className={`px-4 py-2 rounded-lg font-medium text-sm ${viewMode === "cube" ? "bg-blue-600 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300"}`}
-						>
-							큐브 뷰
-						</button>
 					</div>
 				</div>
 
@@ -177,7 +160,7 @@ export default function Projects() {
 			</div>
 
 			{/* 프로젝트 뷰 */}
-			{viewMode === "gallery" ? <ProjectGallery projects={projects} title={projects.length > 0 ? "프로젝트" : "필터링된 프로젝트가 없습니다"} /> : <ProjectCube projects={projects} />}
+			<ProjectGallery projects={projects} title={projects.length > 0 ? "프로젝트" : "필터링된 프로젝트가 없습니다"} />
 		</div>
 	);
 }
