@@ -104,7 +104,9 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
           {projects.map((_, index) => (
             <button
               key={index}
-              className={`w-2.5 h-2.5 rounded-full transition-all ${index === currentIndex ? 'bg-blue-600 dark:bg-blue-500 scale-125' : 'bg-gray-300 dark:bg-gray-600'}`}
+              className={`w-2.5 h-2.5 rounded-full transition-all ${
+                index === currentIndex ? 'bg-blue-600 dark:bg-blue-500 scale-125' : 'bg-gray-300 dark:bg-gray-600'
+              }`}
               onClick={() => {
                 setCurrentIndex(index);
               }}
@@ -181,8 +183,8 @@ function ProjectCard({ project }: { project: Project }) {
         {/* 기술 뱃지 */}
         <div className="absolute top-2 right-2 flex flex-wrap justify-end gap-1 max-w-[70%]">
           {project.technologies.slice(0, 3).map(tech => (
-            <span key={tech} className="text-xs bg-black/70 text-white px-2 py-1 rounded-full backdrop-blur-sm">
-              {tech}
+            <span key={tech.name} className="text-xs bg-black/70 text-white px-2 py-1 rounded-full backdrop-blur-sm">
+              {tech.name}
             </span>
           ))}
           {project.technologies.length > 3 && (
@@ -196,7 +198,7 @@ function ProjectCard({ project }: { project: Project }) {
       {/* 프로젝트 정보 */}
       <div className="p-5">
         <span className="text-xs text-gray-500 dark:text-gray-400">
-          {new Date(project.date).toLocaleDateString('ko-KR', {
+          {new Date(project.date.start).toLocaleDateString('ko-KR', {
             year: 'numeric',
             month: 'long',
           })}
@@ -207,7 +209,7 @@ function ProjectCard({ project }: { project: Project }) {
         {/* 프로젝트 링크 */}
         <div className="flex justify-between items-center">
           <Link
-            to={`/projects/${project.id}`}
+            to={`/project/${project.id}`}
             className="text-blue-600 dark:text-blue-400 font-medium text-sm hover:underline"
           >
             자세히 보기
@@ -215,9 +217,9 @@ function ProjectCard({ project }: { project: Project }) {
           </Link>
 
           <div className="flex space-x-2">
-            {project.demoUrl && (
+            {project.links.some(link => link.type === 'demo') && (
               <a
-                href={project.demoUrl}
+                href={project.links.find(link => link.type === 'demo')?.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
@@ -246,9 +248,9 @@ function ProjectCard({ project }: { project: Project }) {
               </a>
             )}
 
-            {project.sourceUrl && (
+            {project.links.some(link => link.type === 'github') && (
               <a
-                href={project.sourceUrl}
+                href={project.links.find(link => link.type === 'github')?.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
