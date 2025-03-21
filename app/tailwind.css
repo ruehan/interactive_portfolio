@@ -4,191 +4,256 @@
 
 /* 커스텀 폰트 및 변수 */
 :root {
-	--neon-blue: #6366f1;
-	--neon-purple: #a855f7;
+  --neon-blue: #6366f1;
+  --neon-purple: #a855f7;
 }
 
 /* 다크 모드 자동 감지 */
 @media (prefers-color-scheme: dark) {
-	:root {
-		--background: #060816;
-		--foreground: #f8fafc;
-	}
+  :root {
+    --background: #060816;
+    --foreground: #f8fafc;
+  }
 }
 
 /* 라이트 모드 */
-:root[class="light"] {
-	--background: #ffffff;
-	--foreground: #1e293b;
-	--star-color: #0f2e72; /* 라이트 모드의 별 색상 (더 진한 파란색) */
-	--nebula-color: rgba(15, 46, 114, 0.5); /* 라이트 모드의 성운 색상 (더 진한 파란색과 높은 불투명도) */
-	--star-opacity: 1; /* 라이트 모드의 별 불투명도 (완전 불투명) */
+:root[class='light'] {
+  --background: #ffffff;
+  --foreground: #1e293b;
+  --star-color: #0f2e72; /* 라이트 모드의 별 색상 (더 진한 파란색) */
+  --nebula-color: rgba(15, 46, 114, 0.5); /* 라이트 모드의 성운 색상 (더 진한 파란색과 높은 불투명도) */
+  --star-opacity: 1; /* 라이트 모드의 별 불투명도 (완전 불투명) */
 }
 
 /* 다크 모드 */
-:root[class="dark"] {
-	--background: #060816;
-	--foreground: #f8fafc;
-	--star-color: #ffffff; /* 다크 모드의 별 색상 (흰색) */
-	--nebula-color: rgba(255, 255, 255, 0.2); /* 다크 모드의 성운 색상 (흰색) */
-	--star-opacity: 0.7; /* 다크 모드의 별 불투명도 */
+:root[class='dark'] {
+  --background: #060816;
+  --foreground: #f8fafc;
+  --star-color: #ffffff; /* 다크 모드의 별 색상 (흰색) */
+  --nebula-color: rgba(255, 255, 255, 0.2); /* 다크 모드의 성운 색상 (흰색) */
+  --star-opacity: 0.7; /* 다크 모드의 별 불투명도 */
 }
 
 /* 전역 스타일 */
 body {
-	@apply antialiased;
-	background-color: var(--background);
-	color: var(--foreground);
+  @apply antialiased;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 /* 3D 효과를 위한 관점(perspective) 클래스 */
 .perspective-800 {
-	perspective: 800px;
+  perspective: 800px;
 }
 
 /* 플립 카드를 위한 관점 클래스 */
 .perspective-1000 {
-	perspective: 1000px;
+  perspective: 1000px;
 }
 
 .preserve-3d {
-	transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 
 .backface-hidden {
-	backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .rotate-y-180 {
-	transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 /* 네온 효과 */
 .neon-text {
-	text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+  text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
 }
 
 .neon-box {
-	box-shadow: 0 0 5px var(--neon-purple), 0 0 10px var(--neon-purple);
+  box-shadow: 0 0 5px var(--neon-purple), 0 0 10px var(--neon-purple);
 }
 
 /* 스크롤 애니메이션 */
 @keyframes fadeInUp {
-	from {
-		opacity: 0;
-		transform: translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* 우주 배경을 위한 스타일 */
 .space-gradient {
-	@apply dark:bg-gradient-to-b dark:from-[#050510] dark:via-[#0a0a18] dark:to-[#0f0f20] bg-white;
+  @apply dark:bg-gradient-to-b dark:from-[#050510] dark:via-[#0a0a18] dark:to-[#0f0f20] bg-white;
 }
 
 /* 별 반짝임 효과 */
 @keyframes twinkle {
-	0%,
-	100% {
-		opacity: 0.4; /* 최소 불투명도 높임 */
-	}
-	50% {
-		opacity: 1;
-	}
+  0%,
+  100% {
+    opacity: 0.4; /* 최소 불투명도 높임 */
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* 별 반짝임 애니메이션 */
 .animate-twinkle {
-	animation: twinkle 5s infinite ease-in-out;
+  animation: twinkle 5s infinite ease-in-out;
 }
 
 /* 별이 천천히 움직이는 효과 */
 @keyframes floatStar {
-	0% {
-		transform: translateY(0px);
-	}
-	50% {
-		transform: translateY(-10px);
-	}
-	100% {
-		transform: translateY(0px);
-	}
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .animate-float {
-	animation: floatStar 15s infinite ease-in-out;
+  animation: floatStar 15s infinite ease-in-out;
 }
 
 /* 유성 효과 */
 @keyframes shootingStar {
-	0% {
-		transform: translateX(0) translateY(0);
-		opacity: 1;
-	}
-	70% {
-		opacity: 1;
-	}
-	100% {
-		transform: translateX(200px) translateY(200px);
-		opacity: 0;
-	}
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200px) translateY(200px);
+    opacity: 0;
+  }
 }
 
 .shooting-star {
-	position: absolute;
-	width: 2px;
-	height: 2px;
-	border-radius: 50%;
-	animation: shootingStar 5s linear forwards;
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  animation: shootingStar 5s linear forwards;
 }
 
 /* 별이 빛나는 배경용 클래스 */
 .stars-container {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	transform-style: preserve-3d;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
 }
 
 /* 프로젝트 큐브 스타일 */
 .cube-perspective {
-	perspective: 1000px;
+  perspective: 1000px;
 }
 
 .cube-container {
-	transform-style: preserve-3d;
-	transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .cube-face-front {
-	transform: translateZ(150px);
-	transition: all 0.3s ease;
+  transform: translateZ(150px);
+  transition: all 0.3s ease;
 }
 
 .cube-face-right {
-	transform: rotateY(90deg) translateZ(150px);
-	transition: all 0.3s ease;
+  transform: rotateY(90deg) translateZ(150px);
+  transition: all 0.3s ease;
 }
 
 .cube-face-back {
-	transform: rotateY(180deg) translateZ(150px);
-	transition: all 0.3s ease;
+  transform: rotateY(180deg) translateZ(150px);
+  transition: all 0.3s ease;
 }
 
 .cube-face-left {
-	transform: rotateY(-90deg) translateZ(150px);
-	transition: all 0.3s ease;
+  transform: rotateY(-90deg) translateZ(150px);
+  transition: all 0.3s ease;
 }
 
 .cube-face-top {
-	transform: rotateX(90deg) translateZ(150px);
-	transition: all 0.3s ease;
+  transform: rotateX(90deg) translateZ(150px);
+  transition: all 0.3s ease;
 }
 
 .cube-face-bottom {
-	transform: rotateX(-90deg) translateZ(150px);
-	transition: all 0.3s ease;
+  transform: rotateX(-90deg) translateZ(150px);
+  transition: all 0.3s ease;
+}
+
+/* 이스터에그 효과 스타일 */
+/* 매트릭스 효과 */
+@keyframes matrix-rain {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+.matrix-effect {
+  position: relative;
+}
+
+.matrix-effect::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(0deg, rgba(0, 255, 0, 0.2) 25%, rgba(0, 255, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 75%);
+  background-size: 100% 200%;
+  animation: matrix-rain 2s linear infinite;
+  z-index: 9999;
+}
+
+/* 무지개 효과 */
+@keyframes rainbow-shift {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+.rainbow-effect {
+  animation: rainbow-shift 5s linear infinite;
+}
+
+/* 중력 효과 */
+@keyframes gravity {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(20px) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.gravity-effect * {
+  animation: gravity 1s ease-in-out infinite;
+}
+
+.gravity-effect *:nth-child(odd) {
+  animation-delay: 0.5s;
+  animation-direction: alternate-reverse;
 }
