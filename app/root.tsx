@@ -1,8 +1,10 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from "@remix-run/react";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { json, createCookieSessionStorage } from "@remix-run/node";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
+import Header from "~/components/Header";
+import { useThemeStore } from "~/store/themeStore";
 import "./tailwind.css";
 
 // 테마 세션 관리를 위한 세션 스토리지 생성
@@ -77,46 +79,40 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	);
 }
 
-export default function App() {
+function ThemeHydration() {
 	const { theme: initialTheme } = useLoaderData<typeof loader>();
-	const [theme, setTheme] = useState<string | null>(null);
+	const setTheme = useThemeStore((state) => state.setTheme);
 
-	// hydration 불일치 방지를 위한 초기화
+	// 서버에서 로드한 테마로 Zustand 스토어 초기화
 	useEffect(() => {
 		setTheme(initialTheme);
-	}, [initialTheme]);
+		// 스토어 하이드레이션 처리
+		useThemeStore.persist.rehydrate();
+	}, [initialTheme, setTheme]);
 
-	// 테마 전환 함수
-	const toggleTheme = () => {
-		const newTheme = theme === "light" ? "dark" : "light";
-		setTheme(newTheme);
+	return null;
+}
 
-		// 쿠키 업데이트를 위한 fetch 요청
-		fetch("/", {
-			method: "POST",
-			body: new URLSearchParams({ theme: newTheme }),
-		});
-	};
-
-	// 테마 클래스 관리
-	useEffect(() => {
-		if (theme === "dark") {
-			document.documentElement.classList.add("dark");
-		} else {
-			document.documentElement.classList.remove("dark");
-		}
-	}, [theme]);
-
+export default function App() {
 	return (
-		<html lang="ko" className={theme ?? ""}>
+		<html lang="ko">
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<Meta />
 				<Links />
 			</head>
-			<body className="bg-black dark:bg-black transition-colors duration-300">
-				<Outlet context={{ theme, toggleTheme }} />
+			<body className="bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+				<div className="flex flex-col min-h-screen">
+					<ThemeHydration />
+					<Header />
+					<main className="flex-grow pt-16">
+						<Outlet />
+					</main>
+					<footer className="py-6 bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+						<div className="container mx-auto px-4 text-center text-sm text-gray-600 dark:text-gray-400">© {new Date().getFullYear()} 포트폴리오. 모든 권리 보유.</div>
+					</footer>
+				</div>
 				<ScrollRestoration />
 				<Scripts />
 			</body>

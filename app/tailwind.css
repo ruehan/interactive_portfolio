@@ -46,6 +46,23 @@ body {
 	perspective: 800px;
 }
 
+/* 플립 카드를 위한 관점 클래스 */
+.perspective-1000 {
+	perspective: 1000px;
+}
+
+.preserve-3d {
+	transform-style: preserve-3d;
+}
+
+.backface-hidden {
+	backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+	transform: rotateY(180deg);
+}
+
 /* 네온 효과 */
 .neon-text {
 	text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);

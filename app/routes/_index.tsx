@@ -3,7 +3,6 @@ import { useOutletContext } from "@remix-run/react";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 
-import Header from "~/components/Header";
 import InteractiveBackground from "~/components/InteractiveBackground";
 import { MultiLanguageText, RotatingProfileImage } from "~/components/TextAnimation";
 import TechStack from "~/components/TechStack";
@@ -36,19 +35,14 @@ interface OutletContext {
 }
 
 export default function Index() {
-	// 다크모드 상태와 토글 함수 가져오기
-	const { theme, toggleTheme } = useOutletContext<OutletContext>();
+	// 컨텍스트 사용
+	useOutletContext<OutletContext>();
 	const heroRef = useRef<HTMLDivElement>(null);
-
-	const isDarkMode = theme === "dark";
 
 	return (
 		<main className="min-h-screen text-gray-800 dark:text-gray-200 overflow-x-hidden">
 			{/* 인터랙티브 배경 */}
 			<InteractiveBackground />
-
-			{/* 헤더 */}
-			<Header toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
 
 			{/* 히어로 섹션 */}
 			<section ref={heroRef} className="relative min-h-screen flex items-center justify-center pt-16 pb-32 px-4 sm:px-6 lg:px-8">
@@ -100,7 +94,6 @@ export default function Index() {
 							className="flex justify-center"
 						>
 							<div className="relative w-64 h-64 sm:w-80 sm:h-80">
-								{/* 프로필 이미지 (실제 이미지 경로로 교체해야 합니다) */}
 								<RotatingProfileImage imageSrc="/images/profile.jpg" alt="한규 프로필 이미지" className="w-full h-full" />
 
 								{/* 배경 장식 효과 */}
