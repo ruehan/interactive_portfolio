@@ -31,7 +31,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   }
 
   if (techFilter) {
-    filteredProjects = filteredProjects.filter(project => project.technologies.includes(techFilter));
+    filteredProjects = filteredProjects.filter(project => project.technologies.some(tech => tech.name === techFilter));
   }
 
   return json({
@@ -153,15 +153,15 @@ export default function Projects() {
 
               {technologies.map(tech => (
                 <button
-                  key={tech}
-                  onClick={() => handleTechChange(tech)}
+                  key={tech.name}
+                  onClick={() => handleTechChange(tech.name)}
                   className={`px-3 py-1.5 rounded-md text-sm transition-all ${
-                    tech === activeTechFilter
+                    tech.name === activeTechFilter
                       ? 'bg-blue-600 text-white shadow-md scale-105'
                       : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-                  } ${animateFilters && tech === activeTechFilter ? 'animate-pulse' : ''}`}
+                  } ${animateFilters && tech.name === activeTechFilter ? 'animate-pulse' : ''}`}
                 >
-                  {tech}
+                  {tech.name}
                 </button>
               ))}
             </div>
