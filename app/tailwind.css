@@ -160,28 +160,35 @@ body {
 
 .cube-container {
 	transform-style: preserve-3d;
+	transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .cube-face-front {
 	transform: translateZ(150px);
+	transition: all 0.3s ease;
 }
 
 .cube-face-right {
 	transform: rotateY(90deg) translateZ(150px);
+	transition: all 0.3s ease;
 }
 
 .cube-face-back {
 	transform: rotateY(180deg) translateZ(150px);
+	transition: all 0.3s ease;
 }
 
 .cube-face-left {
 	transform: rotateY(-90deg) translateZ(150px);
+	transition: all 0.3s ease;
 }
 
 .cube-face-top {
 	transform: rotateX(90deg) translateZ(150px);
+	transition: all 0.3s ease;
 }
 
 .cube-face-bottom {
 	transform: rotateX(-90deg) translateZ(150px);
+	transition: all 0.3s ease;
 }

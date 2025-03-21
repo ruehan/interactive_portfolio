@@ -10,26 +10,26 @@ interface ProjectGalleryProps {
 
 export default function ProjectGallery({ projects, title }: ProjectGalleryProps) {
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const [direction, setDirection] = useState(0);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const isDragging = useRef(false);
 
 	// 모션 값 설정
 	const x = useMotionValue(0);
-	const scale = useTransform(x, [-200, 0, 200], [0.8, 1, 0.8]);
-	const rotate = useTransform(x, [-200, 0, 200], [8, 0, -8]);
-	const springX = useSpring(x, { stiffness: 200, damping: 20 });
+	const scale = useTransform(x, [-200, 0, 200], [0.9, 1, 0.9]);
+	const springX = useSpring(x, { stiffness: 400, damping: 30 });
 
 	// 드래그 완료 시 처리
 	const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
 		isDragging.current = false;
 
-		if (info.offset.x > 100 && currentIndex > 0) {
-			setDirection(-1);
-			setCurrentIndex(currentIndex - 1);
-		} else if (info.offset.x < -100 && currentIndex < projects.length - 1) {
-			setDirection(1);
-			setCurrentIndex(currentIndex + 1);
+		if (info.offset.x > 80 && currentIndex > 0) {
+			setTimeout(() => {
+				setCurrentIndex(currentIndex - 1);
+			}, 50);
+		} else if (info.offset.x < -80 && currentIndex < projects.length - 1) {
+			setTimeout(() => {
+				setCurrentIndex(currentIndex + 1);
+			}, 50);
 		}
 	};
 
@@ -37,10 +37,8 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === "ArrowLeft" && currentIndex > 0) {
-				setDirection(-1);
 				setCurrentIndex(currentIndex - 1);
 			} else if (e.key === "ArrowRight" && currentIndex < projects.length - 1) {
-				setDirection(1);
 				setCurrentIndex(currentIndex + 1);
 			}
 		};
@@ -66,36 +64,37 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
 			<div ref={containerRef} className="relative h-[550px] md:h-[650px] mx-auto overflow-hidden">
 				{/* 3D 효과 컨테이너 */}
 				<div className="perspective-1000 w-full h-full flex justify-center items-center">
-					<AnimatePresence initial={false} custom={direction}>
+					<AnimatePresence initial={false} mode="wait">
 						<motion.div
 							key={currentIndex}
-							custom={direction}
 							initial={{
 								opacity: 0,
-								rotateY: direction * 30,
-								scale: 0.8,
+								scale: 0.9,
 							}}
 							animate={{
 								opacity: 1,
-								rotateY: 0,
 								scale: 1,
-								transition: { duration: 0.5 },
+								transition: {
+									duration: 0.3,
+									ease: "easeInOut",
+								},
 							}}
 							exit={{
 								opacity: 0,
-								rotateY: direction * -30,
-								scale: 0.8,
-								transition: { duration: 0.3 },
+								scale: 0.9,
+								transition: {
+									duration: 0.2,
+									ease: "easeInOut",
+								},
 							}}
 							drag="x"
 							dragConstraints={{ left: 0, right: 0 }}
-							dragElastic={0.1}
+							dragElastic={0.2}
 							onDragStart={() => (isDragging.current = true)}
 							onDragEnd={handleDragEnd}
 							style={{
 								x: springX,
 								scale,
-								rotateY: rotate,
 							}}
 							className="absolute w-[300px] sm:w-[400px] md:w-[500px] cursor-grab active:cursor-grabbing touch-pan-y"
 						>
@@ -111,7 +110,6 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
 							key={index}
 							className={`w-2.5 h-2.5 rounded-full transition-all ${index === currentIndex ? "bg-blue-600 dark:bg-blue-500 scale-125" : "bg-gray-300 dark:bg-gray-600"}`}
 							onClick={() => {
-								setDirection(index > currentIndex ? 1 : -1);
 								setCurrentIndex(index);
 							}}
 							aria-label={`프로젝트 ${index + 1} 보기`}
@@ -126,7 +124,6 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
 					}`}
 					onClick={() => {
 						if (currentIndex > 0) {
-							setDirection(-1);
 							setCurrentIndex(currentIndex - 1);
 						}
 					}}
@@ -144,7 +141,6 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
 					}`}
 					onClick={() => {
 						if (currentIndex < projects.length - 1) {
-							setDirection(1);
 							setCurrentIndex(currentIndex + 1);
 						}
 					}}
@@ -273,13 +269,24 @@ export function ProjectCube({ projects }: { projects: Project[] }) {
 			<h2 className="text-3xl font-bold text-center mb-12">프로젝트 큐브</h2>
 
 			<div className="relative h-[400px] mx-auto cube-perspective">
-				<div ref={cubeRef} className="w-[300px] h-[300px] relative mx-auto cube-container transition-transform duration-1000" style={{ transform: `${getCubeTransform()} translateZ(-150px)` }}>
+				<motion.div
+					ref={cubeRef}
+					className="w-[300px] h-[300px] relative mx-auto cube-container"
+					style={{ transform: `${getCubeTransform()} translateZ(-150px)` }}
+					animate={{ scale: [0.95, 1] }}
+					transition={{
+						duration: 0.5,
+						ease: "easeInOut",
+						times: [0, 1],
+					}}
+				>
 					{/* 큐브의 6면 */}
 					{["front", "right", "back", "left", "top", "bottom"].map((face, index) => (
-						<div
+						<motion.div
 							key={face}
-							className={`absolute w-full h-full p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden 
-                cube-face-${face}`}
+							className={`absolute w-full h-full p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden cube-face-${face}`}
+							whileHover={{ scale: 1.02 }}
+							transition={{ type: "spring", stiffness: 400, damping: 10 }}
 						>
 							<Link to={`/projects/${cubeProjects[index].id}`} className="block h-full">
 								<div className="h-1/2 overflow-hidden rounded-t-lg">
@@ -290,21 +297,23 @@ export function ProjectCube({ projects }: { projects: Project[] }) {
 									<p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">{cubeProjects[index].description}</p>
 								</div>
 							</Link>
-						</div>
+						</motion.div>
 					))}
-				</div>
+				</motion.div>
 			</div>
 
 			{/* 탐색 버튼 */}
 			<div className="flex flex-wrap justify-center gap-2 mt-10">
 				{["전면", "오른쪽", "뒷면", "왼쪽", "위", "아래"].map((label, index) => (
-					<button
+					<motion.button
 						key={label}
 						onClick={() => rotateCube(index)}
 						className={`px-3 py-1 rounded-md ${currentFace === index ? "bg-blue-600 text-white" : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"}`}
+						whileHover={{ scale: 1.05 }}
+						whileTap={{ scale: 0.95 }}
 					>
 						{label}
-					</button>
+					</motion.button>
 				))}
 			</div>
 		</div>
