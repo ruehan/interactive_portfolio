@@ -1,8 +1,8 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from 'react';
 
 interface ClientOnlyProps {
-	children: ReactNode | (() => ReactNode);
-	fallback?: ReactNode;
+  children: ReactNode | (() => ReactNode);
+  fallback?: ReactNode;
 }
 
 /**
@@ -10,15 +10,15 @@ interface ClientOnlyProps {
  * Three.js와 같은 브라우저 API에 의존하는 컴포넌트를 SSR 중에 오류 없이 렌더링할 수 있게 해줍니다.
  */
 export function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
-	const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
-	useEffect(() => {
-		setIsClient(true);
-	}, []);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
-	if (isClient) {
-		return typeof children === "function" ? <>{children()}</> : <>{children}</>;
-	}
+  if (isClient) {
+    return typeof children === 'function' ? <>{children()}</> : <>{children}</>;
+  }
 
-	return <>{fallback}</>;
+  return <>{fallback}</>;
 }

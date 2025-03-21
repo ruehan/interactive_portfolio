@@ -65,11 +65,16 @@ body {
 
 /* 네온 효과 */
 .neon-text {
-  text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+  text-shadow:
+    0 0 5px var(--neon-blue),
+    0 0 10px var(--neon-blue),
+    0 0 20px var(--neon-blue);
 }
 
 .neon-box {
-  box-shadow: 0 0 5px var(--neon-purple), 0 0 10px var(--neon-purple);
+  box-shadow:
+    0 0 5px var(--neon-purple),
+    0 0 10px var(--neon-purple);
 }
 
 /* 스크롤 애니메이션 */
