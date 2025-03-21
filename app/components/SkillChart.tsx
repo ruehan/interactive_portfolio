@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 export type Skill = {
 	name: string;
-	level: number; // 0부터 100까지
+	level: number;
 	color: string;
 };
 
@@ -19,7 +19,6 @@ export default function SkillChart({ skills, size = 300, labelColor = "white" }:
 	const centerY = size / 2;
 	const radius = size * 0.4;
 
-	// 스킬 각도 계산
 	const angleStep = (Math.PI * 2) / skills.length;
 
 	useEffect(() => {
@@ -30,10 +29,9 @@ export default function SkillChart({ skills, size = 300, labelColor = "white" }:
 		return <div style={{ width: size, height: size }}></div>;
 	}
 
-	// 방사형 그래프 눈금선 생성
 	const createGrid = () => {
 		const gridLines = [];
-		const levels = 5; // 5개의 동심원
+		const levels = 5;
 
 		for (let i = 1; i <= levels; i++) {
 			const gridRadius = (radius * i) / levels;
@@ -47,7 +45,6 @@ export default function SkillChart({ skills, size = 300, labelColor = "white" }:
 			gridLines.push(<polygon key={`grid-${i}`} points={points.join(" ")} fill="none" stroke="rgba(255, 255, 255, 0.1)" strokeWidth="1" />);
 		}
 
-		// 축 선 그리기
 		skills.forEach((_, idx) => {
 			const angle = -Math.PI / 2 + idx * angleStep;
 			const x = centerX + radius * Math.cos(angle);
@@ -59,7 +56,6 @@ export default function SkillChart({ skills, size = 300, labelColor = "white" }:
 		return gridLines;
 	};
 
-	// 스킬 데이터 포인트 계산
 	const calculatePoints = () => {
 		return skills.map((skill, idx) => {
 			const angle = -Math.PI / 2 + idx * angleStep;
@@ -108,11 +104,10 @@ export default function SkillChart({ skills, size = 300, labelColor = "white" }:
 				{/* 레이블 */}
 				{skills.map((skill, idx) => {
 					const angle = -Math.PI / 2 + idx * angleStep;
-					const labelRadius = radius + 20; // 레이블 위치 조정
+					const labelRadius = radius + 20;
 					const x = centerX + labelRadius * Math.cos(angle);
 					const y = centerY + labelRadius * Math.sin(angle);
 
-					// 레이블 정렬 조정
 					const textAnchor = Math.abs(angle - 0) < 0.1 || Math.abs(angle - Math.PI) < 0.1 ? "middle" : angle > 0 && angle < Math.PI ? "start" : "end";
 
 					return (

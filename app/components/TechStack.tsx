@@ -7,7 +7,6 @@ interface TechItem {
 	color: string;
 }
 
-// 기술 스택 데이터
 const techStack: TechItem[] = [
 	{ name: "React", icon: "react.svg", color: "#61dafb" },
 	{ name: "Next.js", icon: "nextjs.svg", color: "#000000" },

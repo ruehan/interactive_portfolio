@@ -16,7 +16,6 @@ export function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
 		setIsClient(true);
 	}, []);
 
-	// children이 함수인 경우 실행
 	if (isClient) {
 		return typeof children === "function" ? <>{children()}</> : <>{children}</>;
 	}

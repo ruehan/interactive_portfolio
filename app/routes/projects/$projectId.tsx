@@ -20,7 +20,6 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	];
 };
 
-// 로더 함수: URL 파라미터에서 프로젝트 ID를 가져와 데이터 로드
 export async function loader({ params }: LoaderFunctionArgs) {
 	const projectId = params.projectId;
 
@@ -37,7 +36,6 @@ export async function loader({ params }: LoaderFunctionArgs) {
 	return json({ project });
 }
 
-// 에러 바운더리 컴포넌트
 export function ErrorBoundary() {
 	return (
 		<div className="container mx-auto px-4 py-16 text-center">
@@ -59,17 +57,14 @@ export default function ProjectDetails() {
 	const { project } = useLoaderData<typeof loader>();
 	const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-	// 다음 이미지로 이동
 	const nextImage = () => {
 		setCurrentImageIndex((prev) => (prev === project.images.length - 1 ? 0 : prev + 1));
 	};
 
-	// 이전 이미지로 이동
 	const prevImage = () => {
 		setCurrentImageIndex((prev) => (prev === 0 ? project.images.length - 1 : prev - 1));
 	};
 
-	// 특정 이미지로 직접 이동
 	const goToImage = (index: number) => {
 		setCurrentImageIndex(index);
 	};

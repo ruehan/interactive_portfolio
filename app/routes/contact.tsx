@@ -12,26 +12,20 @@ export const meta: MetaFunction = () => {
 	return [{ title: "연락하기 | 한규 포트폴리오" }, { name: "description", content: "한규에게 연락하기. 이메일, 소셜 미디어 또는 연락 양식을 통해 연락하세요." }];
 };
 
-// GitHub API를 사용하여 최신 활동 정보를 가져오는 로더 함수
 export const loader = async () => {
-	// GitHub API 엔드포인트 - 여기서는 사용자명을 하드코딩했지만 환경변수로 관리하는 것이 좋습니다
 	const username = "ruehan"; // GitHub 사용자명
 
 	try {
-		// GitHub API에서 사용자 정보 가져오기
 		const userResponse = await fetch(`https://api.github.com/users/${username}`);
 		const userData = await userResponse.json();
 
-		// GitHub API에서 사용자의 최근 이벤트 가져오기
 		const eventsResponse = await fetch(`https://api.github.com/users/${username}/events/public`);
 		const eventsData = await eventsResponse.json();
 
 		console.log(eventsData);
 
-		// API 응답이 오류인지 확인 (rate limit 초과 등)
 		const isError = eventsData && eventsData.message && eventsData.documentation_url;
 
-		// 최근 5개 이벤트만 필터링
 		const recentEvents =
 			Array.isArray(eventsData) && !isError
 				? eventsData.slice(0, 5).map((event: { id: string; type: string; repo: { name: string }; created_at: string }) => ({
@@ -41,9 +35,8 @@ export const loader = async () => {
 						createdAt: event.created_at,
 						// eslint-disable-next-line no-mixed-spaces-and-tabs
 				  }))
-				: []; // API가 배열이 아니거나 오류인 경우 빈 배열 사용
+				: [];
 
-		// 속도 제한 오류 로깅
 		if (isError) {
 			console.warn("GitHub API 속도 제한 초과:", eventsData.message);
 		}
@@ -61,7 +54,6 @@ export const loader = async () => {
 		});
 	} catch (error) {
 		console.error("GitHub API 요청 실패:", error);
-		// API 요청 실패 시 기본 데이터 제공
 		return json({
 			github: {
 				user: {
@@ -76,28 +68,22 @@ export const loader = async () => {
 	}
 };
 
-// 폼 제출 처리를 위한 액션 함수
 export const action = async ({ request }: ActionFunctionArgs) => {
-	// 폼 데이터 추출
 	const formData = await request.formData();
 	const name = formData.get("name") as string;
 	const email = formData.get("email") as string;
 	const subject = formData.get("subject") as string;
 	const message = formData.get("message") as string;
 
-	// 폼 유효성 검사
 	const errors = validateContactForm({ name, email, subject, message });
 
-	// 오류가 있으면 오류 메시지 반환
 	if (Object.keys(errors).length > 0) {
 		return json({ errors, success: false }, { status: 400 });
 	}
 
 	try {
-		// 유효성 검사를 통과하면 이메일 전송
 		await sendEmail({ name, email, subject, message });
 
-		// 성공 메시지 반환
 		return json({ success: true, errors: {} as Record<string, string> }, { status: 200 });
 	} catch (error) {
 		console.error("이메일 발송 오류:", error);
@@ -113,7 +99,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	}
 };
 
-// 캐시 제어 및 보안 헤더 설정
 export const headers: HeadersFunction = () => {
 	return {
 		"Cache-Control": "public, max-age=300, s-maxage=3600",
@@ -140,11 +125,9 @@ export default function Contact() {
 	const navigation = useNavigation();
 	const [formSubmitted, setFormSubmitted] = useState(false);
 
-	// 폼 제출 성공 시 처리
 	useEffect(() => {
 		if (actionData?.success) {
 			setFormSubmitted(true);
-			// 5초 후에 성공 메시지 숨기기
 			const timer = setTimeout(() => {
 				setFormSubmitted(false);
 			}, 5000);
@@ -152,7 +135,6 @@ export default function Contact() {
 		}
 	}, [actionData]);
 
-	// 제출 중 상태 확인
 	const isSubmitting = navigation.state === "submitting";
 
 	return (

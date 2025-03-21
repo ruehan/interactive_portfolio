@@ -8,7 +8,6 @@ export default function Header() {
 	// Zustand 스토어에서 테마 상태와 토글 함수 가져오기
 	const { theme, toggleTheme } = useThemeStore();
 
-	// 테마가 변경될 때마다 HTML 클래스 업데이트
 	useEffect(() => {
 		updateHtmlClass(theme);
 	}, [theme]);

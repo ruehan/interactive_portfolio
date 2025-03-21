@@ -25,17 +25,14 @@ export const meta: MetaFunction = () => {
 	];
 };
 
-// 다국어 직함 텍스트
 const multiLanguageTitles = ["풀스택 개발자", "Full Stack Developer", "フルスタック開発者", "Desarrollador Full Stack", "Développeur Full Stack", "全栈开发工程师"];
 
-// 아웃렛 컨텍스트 타입 정의
 interface OutletContext {
 	theme: string | null;
 	toggleTheme: () => void;
 }
 
 export default function Index() {
-	// 컨텍스트 사용
 	useOutletContext<OutletContext>();
 	const heroRef = useRef<HTMLDivElement>(null);
 

@@ -13,12 +13,10 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
 	const containerRef = useRef<HTMLDivElement>(null);
 	const isDragging = useRef(false);
 
-	// 모션 값 설정
 	const x = useMotionValue(0);
 	const scale = useTransform(x, [-200, 0, 200], [0.9, 1, 0.9]);
 	const springX = useSpring(x, { stiffness: 400, damping: 30 });
 
-	// 드래그 완료 시 처리
 	const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
 		isDragging.current = false;
 
@@ -33,7 +31,6 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
 		}
 	};
 
-	// 키보드 탐색 지원
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === "ArrowLeft" && currentIndex > 0) {
@@ -47,7 +44,6 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
 		return () => window.removeEventListener("keydown", handleKeyDown);
 	}, [currentIndex, projects.length]);
 
-	// 프로젝트가 없는 경우
 	if (projects.length === 0) {
 		return (
 			<div className="text-center py-20">
@@ -156,7 +152,6 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
 	);
 }
 
-// 프로젝트 카드 컴포넌트
 function ProjectCard({ project }: { project: Project }) {
 	return (
 		<div className="relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg transform transition-all duration-300 ease-in-out group h-full">

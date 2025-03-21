@@ -81,7 +81,6 @@ export default function FlipCard({ card, className = "" }: FlipCardProps) {
 	);
 }
 
-// CSS 클래스를 위한 전역 스타일 - tailwind.css에 추가 필요
 /*
 .perspective-1000 {
   perspective: 1000px;

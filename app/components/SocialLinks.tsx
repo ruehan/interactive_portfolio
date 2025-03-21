@@ -1,4 +1,3 @@
-// 필요한 인터페이스만 정의
 interface GithubEvent {
 	id: string;
 	type: string;
@@ -21,7 +20,6 @@ interface SocialLinksProps {
 export default function SocialLinks({ githubData }: SocialLinksProps) {
 	const { recentActivity } = githubData;
 
-	// 이벤트 유형 한글화
 	const formatEventType = (type: string): string => {
 		switch (type) {
 			case "PushEvent":
@@ -43,7 +41,6 @@ export default function SocialLinks({ githubData }: SocialLinksProps) {
 		}
 	};
 
-	// 날짜 포맷팅
 	const formatDate = (dateString: string): string => {
 		const date = new Date(dateString);
 		const now = new Date();

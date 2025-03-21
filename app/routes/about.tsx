@@ -29,14 +29,12 @@ interface PortfolioData {
 	}[];
 }
 
-// 아웃렛 컨텍스트 타입 정의
 interface OutletContext {
 	theme: string | null;
 	toggleTheme: () => void;
 }
 
 export const loader = async () => {
-	// 실제 프로젝트에서는 외부 API나 데이터베이스에서 가져올 수 있습니다
 	const portfolioData: PortfolioData = {
 		developer: {
 			name: "한규",
@@ -199,7 +197,6 @@ export default function About() {
 	const headerOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
 	const headerScale = useTransform(scrollYProgress, [0, 0.05], [1, 0.9]);
 
-	// 스크롤에 따라 섹션별 배경색 변경을 위한 참조
 	const bioRef = useRef<HTMLDivElement>(null);
 	const timelineRef = useRef<HTMLDivElement>(null);
 	const skillsRef = useRef<HTMLDivElement>(null);
@@ -209,7 +206,6 @@ export default function About() {
 
 	const [activeSection, setActiveSection] = useState<string>("bio");
 
-	// 스크롤 위치에 따른 active 섹션 업데이트
 	useEffect(() => {
 		const sections = [
 			{ name: "bio", ref: bioRef },
@@ -236,7 +232,6 @@ export default function About() {
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
 
-	// 각 섹션별 CSS 변수 설정
 	const getSectionStyle = () => {
 		const colors = {
 			bio: { primary: "#3b82f6", secondary: "#1d4ed8" },

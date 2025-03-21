@@ -17,10 +17,8 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ errors, isSubmitting, success }: ContactFormProps) {
-	// 인풋 필드들의 포커스 상태 관리
 	const [focusedField, setFocusedField] = useState<string | null>(null);
 
-	// 실시간 유효성 검사를 위한 상태
 	const [formValues, setFormValues] = useState({
 		name: "",
 		email: "",
@@ -28,23 +26,18 @@ export default function ContactForm({ errors, isSubmitting, success }: ContactFo
 		message: "",
 	});
 
-	// 실시간 유효성 검사 오류
 	const [validationErrors, setValidationErrors] = useState<FormErrors>({});
 
-	// 폼 제출 버튼의 애니메이션을 위한 참조
 	const formRef = useRef<HTMLFormElement>(null);
 	const paperPlaneRef = useRef<HTMLDivElement>(null);
 
-	// 폼 필드 변경 핸들러
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
 		setFormValues((prev) => ({ ...prev, [name]: value }));
 
-		// 실시간 유효성 검사
 		validateField(name, value);
 	};
 
-	// 개별 필드 유효성 검사
 	const validateField = (name: string, value: string) => {
 		let error = "";
 
@@ -93,28 +86,23 @@ export default function ContactForm({ errors, isSubmitting, success }: ContactFo
 		}));
 	};
 
-	// 폼 제출 성공 시 종이비행기 애니메이션
 	useEffect(() => {
 		if (success && paperPlaneRef.current && formRef.current) {
 			// 종이비행기 애니메이션 실행
 			const formRect = formRef.current.getBoundingClientRect();
 			const plane = paperPlaneRef.current;
 
-			// 초기 위치 설정 (form 중앙)
 			plane.style.display = "block";
 			plane.style.left = `${formRect.left + formRect.width / 2}px`;
 			plane.style.top = `${formRect.top + formRect.height / 2}px`;
 
-			// 애니메이션 시작
 			setTimeout(() => {
 				plane.classList.add("animate-fly-away");
 
-				// 애니메이션 완료 후 숨기기
 				setTimeout(() => {
 					plane.style.display = "none";
 					plane.classList.remove("animate-fly-away");
 
-					// 폼 초기화
 					if (formRef.current) {
 						formRef.current.reset();
 						setFormValues({

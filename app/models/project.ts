@@ -12,7 +12,6 @@ export interface Project {
 	date: string;
 }
 
-// 목 데이터
 export const projects: Project[] = [
 	{
 		id: "1",
@@ -85,23 +84,19 @@ export const projects: Project[] = [
 	},
 ];
 
-// 프로젝트 ID로 프로젝트 찾기
 export function getProjectById(id: string): Project | undefined {
 	return projects.find((project) => project.id === id);
 }
 
-// 프로젝트 타입별로 필터링
 export function getProjectsByType(type: string): Project[] {
 	if (type === "all") return projects;
 	return projects.filter((project) => project.type === type);
 }
 
-// 기술별로 프로젝트 필터링
 export function getProjectsByTechnology(tech: string): Project[] {
 	return projects.filter((project) => project.technologies.includes(tech));
 }
 
-// 모든 기술 목록 가져오기
 export function getAllTechnologies(): string[] {
 	const techSet = new Set<string>();
 	projects.forEach((project) => {
@@ -110,7 +105,6 @@ export function getAllTechnologies(): string[] {
 	return Array.from(techSet).sort();
 }
 
-// 모든 프로젝트 타입 가져오기
 export function getAllProjectTypes(): string[] {
 	const typeSet = new Set<string>();
 	projects.forEach((project) => {

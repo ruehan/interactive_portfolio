@@ -1,11 +1,11 @@
-import { sanitizeFormData } from "./validation.server";
-import nodemailer from "nodemailer";
+import { sanitizeFormData } from './validation.server';
+import nodemailer from 'nodemailer';
 
 interface EmailData {
-	name: string;
-	email: string;
-	subject: string;
-	message: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
 }
 
 /**
@@ -15,51 +15,46 @@ interface EmailData {
  * @returns Promise<void>
  */
 export async function sendEmail(emailData: EmailData): Promise<void> {
-	// 입력 데이터 정화
-	const sanitizedData = sanitizeFormData(emailData);
+  const sanitizedData = sanitizeFormData(emailData);
 
-	let transporter;
-	let testAccount;
+  let transporter;
+  let testAccount;
 
-	// 환경 변수에 SMTP 설정이 있는지 확인
-	const hasSmtpConfig = process.env.SMTP_USER && process.env.SMTP_PASSWORD;
+  const hasSmtpConfig = process.env.SMTP_USER && process.env.SMTP_PASSWORD;
 
-	if (hasSmtpConfig) {
-		// 실제 SMTP 서버 사용 (프로덕션 및 개발 환경 모두)
-		console.log("실제 SMTP 서버 사용");
-		transporter = nodemailer.createTransport({
-			host: process.env.SMTP_HOST || "smtp.gmail.com",
-			port: parseInt(process.env.SMTP_PORT || "587"),
-			secure: process.env.SMTP_SECURE === "true",
-			auth: {
-				user: process.env.SMTP_USER,
-				pass: process.env.SMTP_PASSWORD,
-			},
-		});
-	} else {
-		// 환경 변수가 설정되지 않은 경우 Ethereal 테스트 계정 생성
-		console.log("Ethereal 테스트 계정 사용");
-		testAccount = await nodemailer.createTestAccount();
-		console.log("테스트 계정 정보:", testAccount);
+  if (hasSmtpConfig) {
+    console.log('실제 SMTP 서버 사용');
+    transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true',
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    });
+  } else {
+    console.log('Ethereal 테스트 계정 사용');
+    testAccount = await nodemailer.createTestAccount();
+    console.log('테스트 계정 정보:', testAccount);
 
-		transporter = nodemailer.createTransport({
-			host: "smtp.ethereal.email",
-			port: 587,
-			secure: false,
-			auth: {
-				user: testAccount.user,
-				pass: testAccount.pass,
-			},
-		});
-	}
+    transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      secure: false,
+      auth: {
+        user: testAccount.user,
+        pass: testAccount.pass,
+      },
+    });
+  }
 
-	// 이메일 발송
-	const mailOptions = {
-		from: `"포트폴리오 문의" <${process.env.MAIL_FROM || testAccount?.user || "noreply@example.com"}>`,
-		to: process.env.MAIL_TO || "contact@example.com",
-		replyTo: sanitizedData.email,
-		subject: `[포트폴리오 문의] ${sanitizedData.subject}`,
-		text: `
+  const mailOptions = {
+    from: `"포트폴리오 문의" <${process.env.MAIL_FROM || testAccount?.user || 'noreply@example.com'}>`,
+    to: process.env.MAIL_TO || 'contact@example.com',
+    replyTo: sanitizedData.email,
+    subject: `[포트폴리오 문의] ${sanitizedData.subject}`,
+    text: `
 이름: ${sanitizedData.name}
 이메일: ${sanitizedData.email}
 제목: ${sanitizedData.subject}
@@ -67,28 +62,27 @@ export async function sendEmail(emailData: EmailData): Promise<void> {
 메시지:
 ${sanitizedData.message}
 		`,
-		html: `
+    html: `
 			<div>
 				<h3>포트폴리오 문의</h3>
 				<p><strong>이름:</strong> ${sanitizedData.name}</p>
 				<p><strong>이메일:</strong> ${sanitizedData.email}</p>
 				<p><strong>제목:</strong> ${sanitizedData.subject}</p>
 				<p><strong>메시지:</strong></p>
-				<p>${sanitizedData.message.replace(/\n/g, "<br>")}</p>
+				<p>${sanitizedData.message.replace(/\n/g, '<br>')}</p>
 			</div>
 		`,
-	};
+  };
 
-	try {
-		const info = await transporter.sendMail(mailOptions);
-		console.log("이메일 발송 완료:", info.messageId);
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log('이메일 발송 완료:', info.messageId);
 
-		// 테스트 계정을 사용한 경우 미리보기 URL 제공
-		if (testAccount) {
-			console.log("이메일 미리보기 URL:", nodemailer.getTestMessageUrl(info));
-		}
-	} catch (error) {
-		console.error("이메일 발송 오류:", error);
-		throw new Error("이메일 발송에 실패했습니다.");
-	}
+    if (testAccount) {
+      console.log('이메일 미리보기 URL:', nodemailer.getTestMessageUrl(info));
+    }
+  } catch (error) {
+    console.error('이메일 발송 오류:', error);
+    throw new Error('이메일 발송에 실패했습니다.');
+  }
 }

@@ -61,7 +61,7 @@ class SequenceTracker implements ISequenceTracker {
 				return;
 			}
 
-			// 콘솔 활성화 단축키 (/)
+			// 코나미 코드 활성화 단축키 (/)
 			if (e.key === "/") {
 				this.isCommandMode = true;
 				this.commandInput = "";
