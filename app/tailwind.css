@@ -152,3 +152,36 @@ body {
 	height: 100%;
 	transform-style: preserve-3d;
 }
+
+/* 프로젝트 큐브 스타일 */
+.cube-perspective {
+	perspective: 1000px;
+}
+
+.cube-container {
+	transform-style: preserve-3d;
+}
+
+.cube-face-front {
+	transform: translateZ(150px);
+}
+
+.cube-face-right {
+	transform: rotateY(90deg) translateZ(150px);
+}
+
+.cube-face-back {
+	transform: rotateY(180deg) translateZ(150px);
+}
+
+.cube-face-left {
+	transform: rotateY(-90deg) translateZ(150px);
+}
+
+.cube-face-top {
+	transform: rotateX(90deg) translateZ(150px);
+}
+
+.cube-face-bottom {
+	transform: rotateX(-90deg) translateZ(150px);
+}
