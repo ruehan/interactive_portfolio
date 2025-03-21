@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 
 interface ClientOnlyProps {
-	children: ReactNode;
+	children: ReactNode | (() => ReactNode);
 	fallback?: ReactNode;
 }
 
@@ -16,5 +16,10 @@ export function ClientOnly({ children, fallback = null }: ClientOnlyProps) {
 		setIsClient(true);
 	}, []);
 
-	return isClient ? <>{children}</> : <>{fallback}</>;
+	// children이 함수인 경우 실행
+	if (isClient) {
+		return typeof children === "function" ? <>{children()}</> : <>{children}</>;
+	}
+
+	return <>{fallback}</>;
 }
