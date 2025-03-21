@@ -33,8 +33,8 @@ export default function Header() {
             transition={{ duration: 0.3 }}
             className="flex items-center space-x-2"
           >
-            <span className="text-blue-600 dark:text-blue-400">포트</span>
-            <span className="text-gray-900 dark:text-white">폴리오</span>
+            <span className="text-blue-600 dark:text-blue-400">한규</span>
+            <span className="text-gray-900 dark:text-white">포트폴리오</span>
           </motion.div>
         </Link>
 
