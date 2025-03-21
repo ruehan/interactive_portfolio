@@ -26,21 +26,35 @@ export const loader = async () => {
 		const eventsResponse = await fetch(`https://api.github.com/users/${username}/events/public`);
 		const eventsData = await eventsResponse.json();
 
+		console.log(eventsData);
+
+		// API 응답이 오류인지 확인 (rate limit 초과 등)
+		const isError = eventsData && eventsData.message && eventsData.documentation_url;
+
 		// 최근 5개 이벤트만 필터링
-		const recentEvents = eventsData.slice(0, 5).map((event: { id: string; type: string; repo: { name: string }; created_at: string }) => ({
-			id: event.id,
-			type: event.type,
-			repo: event.repo.name,
-			createdAt: event.created_at,
-		}));
+		const recentEvents =
+			Array.isArray(eventsData) && !isError
+				? eventsData.slice(0, 5).map((event: { id: string; type: string; repo: { name: string }; created_at: string }) => ({
+						id: event.id,
+						type: event.type,
+						repo: event.repo.name,
+						createdAt: event.created_at,
+						// eslint-disable-next-line no-mixed-spaces-and-tabs
+				  }))
+				: []; // API가 배열이 아니거나 오류인 경우 빈 배열 사용
+
+		// 속도 제한 오류 로깅
+		if (isError) {
+			console.warn("GitHub API 속도 제한 초과:", eventsData.message);
+		}
 
 		return json({
 			github: {
 				user: {
-					name: userData.name,
-					avatar: userData.avatar_url,
-					url: userData.html_url,
-					bio: userData.bio,
+					name: userData?.name || username,
+					avatar: userData?.avatar_url || "",
+					url: userData?.html_url || `https://github.com/${username}`,
+					bio: userData?.bio || "풀스택 개발자",
 				},
 				recentActivity: recentEvents,
 			},
@@ -84,7 +98,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 		await sendEmail({ name, email, subject, message });
 
 		// 성공 메시지 반환
-		return json({ success: true, errors: null }, { status: 200 });
+		return json({ success: true, errors: {} as Record<string, string> }, { status: 200 });
 	} catch (error) {
 		console.error("이메일 발송 오류:", error);
 		return json(

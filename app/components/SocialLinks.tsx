@@ -1,10 +1,4 @@
-interface GithubUser {
-	name: string;
-	avatar: string;
-	url: string;
-	bio: string;
-}
-
+// 필요한 인터페이스만 정의
 interface GithubEvent {
 	id: string;
 	type: string;
@@ -14,7 +8,12 @@ interface GithubEvent {
 
 interface SocialLinksProps {
 	githubData: {
-		user: GithubUser;
+		user: {
+			name?: string;
+			avatar?: string;
+			url?: string;
+			bio?: string;
+		};
 		recentActivity: GithubEvent[];
 	};
 }
