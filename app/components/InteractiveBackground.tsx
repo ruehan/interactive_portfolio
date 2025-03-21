@@ -13,9 +13,9 @@ export default function InteractiveBackground() {
 						style={{
 							top: `${Math.random() * 100}%`,
 							left: `${Math.random() * 100}%`,
-							opacity: "var(--star-opacity)",
-							width: `${Math.random() * 1.5 + 0.8}px`,
-							height: `${Math.random() * 1.5 + 0.8}px`,
+							opacity: 0.9,
+							width: `${Math.random() * 2 + 1}px`,
+							height: `${Math.random() * 2 + 1}px`,
 							animationDelay: `${Math.random() * 10}s`,
 							animationDuration: `${Math.random() * 5 + 3}s`,
 							backgroundColor: "var(--star-color)",
@@ -31,9 +31,9 @@ export default function InteractiveBackground() {
 						style={{
 							top: `${Math.random() * 100}%`,
 							left: `${Math.random() * 100}%`,
-							width: `${Math.random() * 2.5 + 1.5}px`,
-							height: `${Math.random() * 2.5 + 1.5}px`,
-							opacity: "var(--star-opacity)",
+							width: `${Math.random() * 3 + 2}px`,
+							height: `${Math.random() * 3 + 2}px`,
+							opacity: 0.9,
 							animationDelay: `${Math.random() * 5}s`,
 							animationDuration: `${Math.random() * 5 + 5}s`,
 							backgroundColor: "var(--star-color)",
@@ -53,8 +53,9 @@ export default function InteractiveBackground() {
 							animationDuration: `${Math.random() * 3 + 2}s`,
 							transform: `rotate(${Math.random() * 45 + 20}deg)`,
 							background: "linear-gradient(45deg, var(--star-color), transparent)",
-							width: "3px",
-							height: "3px",
+							width: "4px",
+							height: "4px",
+							opacity: 0.9,
 						}}
 					/>
 				))}
@@ -70,7 +71,7 @@ export default function InteractiveBackground() {
 							background: `radial-gradient(circle, var(--nebula-color) 0%, transparent 70%)`,
 							top: `${Math.random() * 100}%`,
 							left: `${Math.random() * 100}%`,
-							opacity: 0.5,
+							opacity: 0.7,
 						}}
 					/>
 				))}
