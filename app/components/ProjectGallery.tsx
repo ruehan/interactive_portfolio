@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring, PanInfo } from 'framer-motion';
 import { Link } from '@remix-run/react';
-import type { Project } from '~/models/project';
+import type { Project, ProjectVideo } from '~/models/project';
+import VideoModal from './VideoModal';
 
 interface ProjectGalleryProps {
   projects: Project[];
@@ -12,6 +13,8 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
+  const [selectedVideo, setSelectedVideo] = useState<ProjectVideo | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const x = useMotionValue(0);
   const scale = useTransform(x, [-200, 0, 200], [0.9, 1, 0.9]);
@@ -94,7 +97,13 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
               }}
               className="absolute w-[300px] sm:w-[400px] md:w-[500px] cursor-grab active:cursor-grabbing touch-pan-y"
             >
-              <ProjectCard project={projects[currentIndex]} />
+              <ProjectCard
+                project={projects[currentIndex]}
+                onOpenVideoModal={video => {
+                  setSelectedVideo(video);
+                  setIsModalOpen(true);
+                }}
+              />
             </motion.div>
           </AnimatePresence>
         </div>
@@ -164,11 +173,20 @@ export default function ProjectGallery({ projects, title }: ProjectGalleryProps)
           </svg>
         </button>
       </div>
+
+      {/* 비디오 모달 */}
+      <VideoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} video={selectedVideo} />
     </div>
   );
 }
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({
+  project,
+  onOpenVideoModal,
+}: {
+  project: Project;
+  onOpenVideoModal: (video: ProjectVideo) => void;
+}) {
   return (
     <div className="relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg transform transition-all duration-300 ease-in-out group h-full">
       {/* 썸네일 이미지 */}
@@ -217,13 +235,11 @@ function ProjectCard({ project }: { project: Project }) {
           </Link>
 
           <div className="flex space-x-2">
-            {project.links.some(link => link.type === 'demo') && (
-              <a
-                href={project.links.find(link => link.type === 'demo')?.url}
-                target="_blank"
-                rel="noopener noreferrer"
+            {project.videos && project.videos.length > 0 ? (
+              <button
+                onClick={() => onOpenVideoModal(project.videos![0])}
                 className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
-                title="데모 보기"
+                title="데모 영상 보기"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -236,17 +252,54 @@ function ProjectCard({ project }: { project: Project }) {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
                   />
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-              </a>
-            )}
+              </button>
+            ) : project.links.some(link => link.type === 'demo') ? (
+              <button
+                onClick={() => {
+                  // 비디오가 없는 경우, demo 링크를 새 창에서 열지 않고 현재 UI에서 모달로 보여주기 위한 더미 비디오 객체 생성
+                  const demoUrl = project.links.find(link => link.type === 'demo')?.url || '';
+                  const dummyVideo: ProjectVideo = {
+                    url: demoUrl,
+                    thumbnail: project.thumbnail,
+                    duration: 'N/A',
+                    title: `${project.title} 데모`,
+                  };
+                  onOpenVideoModal(dummyVideo);
+                }}
+                className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+                title="데모 영상 보기"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </button>
+            ) : null}
 
             {project.links.some(link => link.type === 'github') && (
               <a

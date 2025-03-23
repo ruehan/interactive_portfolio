@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { json } from '@remix-run/node';
 import { useLoaderData, Link } from '@remix-run/react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import type { MetaFunction, LoaderFunctionArgs } from '@remix-run/node';
 import { getProjectById } from '~/models/project';
-import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaPlay } from 'react-icons/fa';
+import VideoModal from '~/components/VideoModal';
+import type { ProjectVideo } from '~/models/project';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data || !data.project) {
@@ -69,6 +71,8 @@ export default function ProjectDetail() {
   const { project } = useLoaderData<typeof loader>();
   const [activeTab, setActiveTab] = useState<'overview' | 'technical' | 'challenges' | 'outcome'>('overview');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [selectedVideo, setSelectedVideo] = useState<ProjectVideo | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
@@ -173,18 +177,62 @@ export default function ProjectDetail() {
 
         {/* 외부 링크 */}
         <div className="flex flex-wrap gap-4 mb-10">
-          {project.links.map((link, index) => (
+          {/* 비디오가 있는 경우 */}
+          {project.videos && project.videos.length > 0 && (
+            <button
+              onClick={() => {
+                setSelectedVideo(project.videos![0]);
+                setIsModalOpen(true);
+              }}
+              className="flex items-center bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
+            >
+              <FaPlay className="mr-2" /> 데모 영상 보기
+            </button>
+          )}
+          {/* 비디오는 없지만 데모 링크가 있는 경우 */}
+          {(!project.videos || project.videos.length === 0) && project.links.some(link => link.type === 'demo') && (
+            <button
+              onClick={() => {
+                const demoUrl = project.links.find(link => link.type === 'demo')?.url || '';
+                const dummyVideo: ProjectVideo = {
+                  url: demoUrl,
+                  thumbnail: project.thumbnail,
+                  duration: 'N/A',
+                  title: `${project.title} 데모`,
+                };
+                setSelectedVideo(dummyVideo);
+                setIsModalOpen(true);
+              }}
+              className="flex items-center bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
+            >
+              <FaPlay className="mr-2" /> 데모 보기
+            </button>
+          )}
+          {/* GitHub 링크 */}
+          {project.links.some(link => link.type === 'github') && (
             <a
-              key={index}
-              href={link.url}
+              href={project.links.find(link => link.type === 'github')?.url}
               target="_blank"
               rel="noreferrer"
               className="flex items-center bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg transition-colors"
             >
-              {link.type === 'github' ? <FaGithub className="mr-2" /> : <FaExternalLinkAlt className="mr-2" />}
-              {link.label}
+              <FaGithub className="mr-2" /> 소스 코드
             </a>
-          ))}
+          )}
+          {/* 기타 링크 (데모, GitHub 제외) */}
+          {project.links
+            .filter(link => link.type !== 'demo' && link.type !== 'github')
+            .map((link, index) => (
+              <a
+                key={index}
+                href={link.url}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg transition-colors"
+              >
+                <FaExternalLinkAlt className="mr-2" /> {link.label}
+              </a>
+            ))}
         </div>
 
         {/* 탭 콘텐츠 */}
@@ -350,6 +398,9 @@ export default function ProjectDetail() {
           )}
         </div>
       </div>
+
+      {/* 비디오 모달 */}
+      <VideoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} video={selectedVideo} />
     </div>
   );
 }
