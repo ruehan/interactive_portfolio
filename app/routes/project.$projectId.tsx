@@ -6,6 +6,7 @@ import type { MetaFunction, LoaderFunctionArgs } from '@remix-run/node';
 import { getProjectById } from '~/models/project';
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft, FaPlay } from 'react-icons/fa';
 import VideoModal from '~/components/VideoModal';
+import ImageModal from '~/components/ImageModal';
 import type { ProjectVideo } from '~/models/project';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -72,7 +73,20 @@ export default function ProjectDetail() {
   const [activeTab, setActiveTab] = useState<'overview' | 'technical' | 'challenges' | 'outcome'>('overview');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedVideo, setSelectedVideo] = useState<ProjectVideo | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+
+  // 현재 선택된 이미지를 모달에 표시하는 함수
+  const openImageModal = () => {
+    if (project.images.length > 0 && project.images[currentImageIndex]) {
+      setIsImageModalOpen(true);
+    }
+  };
+
+  // 이미지 인덱스 변경 함수
+  const changeImageIndex = (index: number) => {
+    setCurrentImageIndex(index);
+  };
 
   return (
     <div className="min-h-screen bg-slate-900 text-white">
@@ -147,13 +161,14 @@ export default function ProjectDetail() {
             {project.images.map((image, index) => (
               <motion.div
                 key={index}
-                className="absolute inset-0 w-full h-full"
+                className="absolute inset-0 w-full h-full cursor-pointer"
                 initial={{ opacity: 0, x: 100 }}
                 animate={{
                   opacity: index === currentImageIndex ? 1 : 0,
                   x: index === currentImageIndex ? 0 : 100,
                 }}
                 transition={{ duration: 0.5 }}
+                onClick={openImageModal}
               >
                 <img src={image.url} alt={image.alt} className="w-full h-full object-cover" />
                 {image.caption && (
@@ -165,11 +180,11 @@ export default function ProjectDetail() {
             ))}
           </div>
           <div className="flex justify-center gap-2">
-            {project.images.map((_, index) => (
+            {project.images.map((image, index) => (
               <button
                 key={index}
                 className={`w-3 h-3 rounded-full ${index === currentImageIndex ? 'bg-blue-500' : 'bg-gray-600'}`}
-                onClick={() => setCurrentImageIndex(index)}
+                onClick={() => changeImageIndex(index)}
               />
             ))}
           </div>
@@ -182,7 +197,7 @@ export default function ProjectDetail() {
             <button
               onClick={() => {
                 setSelectedVideo(project.videos![0]);
-                setIsModalOpen(true);
+                setIsVideoModalOpen(true);
               }}
               className="flex items-center bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
             >
@@ -201,7 +216,7 @@ export default function ProjectDetail() {
                   title: `${project.title} 데모`,
                 };
                 setSelectedVideo(dummyVideo);
-                setIsModalOpen(true);
+                setIsVideoModalOpen(true);
               }}
               className="flex items-center bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
             >
@@ -400,7 +415,15 @@ export default function ProjectDetail() {
       </div>
 
       {/* 비디오 모달 */}
-      <VideoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} video={selectedVideo} />
+      <VideoModal isOpen={isVideoModalOpen} onClose={() => setIsVideoModalOpen(false)} video={selectedVideo} />
+
+      {/* 이미지 모달 */}
+      <ImageModal
+        isOpen={isImageModalOpen}
+        onClose={() => setIsImageModalOpen(false)}
+        imageUrl={project.images[currentImageIndex]?.url || ''}
+        imageAlt={project.images[currentImageIndex]?.alt || ''}
+      />
     </div>
   );
 }

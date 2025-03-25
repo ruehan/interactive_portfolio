@@ -289,15 +289,15 @@ function Game() {
           key === 'ArrowLeft'
             ? Math.max(prev.player.size / 2, prev.player.x - 15)
             : key === 'ArrowRight'
-            ? Math.min(canvas.width - prev.player.size / 2, prev.player.x + 15)
-            : prev.player.x;
+              ? Math.min(canvas.width - prev.player.size / 2, prev.player.x + 15)
+              : prev.player.x;
 
         const newPlayerY =
           key === 'ArrowUp'
             ? Math.max(prev.player.size / 2, prev.player.y - 15)
             : key === 'ArrowDown'
-            ? Math.min(canvas.height - prev.player.size / 2, prev.player.y + 15)
-            : prev.player.y;
+              ? Math.min(canvas.height - prev.player.size / 2, prev.player.y + 15)
+              : prev.player.y;
 
         return {
           ...prev,
