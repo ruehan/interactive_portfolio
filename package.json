@@ -24,11 +24,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "three": "^0.174.0",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.16.2",
+    "@tailwindcss/typography": "^0.5.16",
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
