@@ -638,12 +638,7 @@ export const projects: Project[] = [
     ],
     links: [
       {
-        url: 'https://player.example.com',
-        type: 'demo',
-        label: '다운로드',
-      },
-      {
-        url: 'https://github.com/username/media-player',
+        url: 'https://github.com/ruehan/Contents_Lenz',
         type: 'github',
         label: '소스 코드',
       },
