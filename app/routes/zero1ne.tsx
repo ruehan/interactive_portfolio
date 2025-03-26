@@ -5,11 +5,11 @@ import { useRef, useState } from 'react';
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'ZERO ONE Inc. | 자연과 과기술이 공존하는 길' },
-    { name: 'description', content: '유기성 폐기물 자원화 연구기업 제로원이 동행합니다' },
+    { title: 'ZERO ONE Inc. | 자연과 기술이 공존하는 길' },
+    { name: 'description', content: '유기성 폐기물 자원화 제로원이 동행합니다' },
     { name: 'keywords', content: '환경기술, 폐기물 관리, 자원화, 제로원, 친환경 솔루션' },
-    { property: 'og:title', content: 'ZERO ONE Inc. | 자연과 과기술이 공존하는 길' },
-    { property: 'og:description', content: '유기성 폐기물 자원화 연구기업 제로원이 동행합니다' },
+    { property: 'og:title', content: 'ZERO ONE Inc. | 자연과 기술이 공존하는 길' },
+    { property: 'og:description', content: '유기성 폐기물 자원화 제로원이 동행합니다' },
     { property: 'og:type', content: 'website' },
   ];
 };
@@ -125,7 +125,7 @@ export default function ZeroOne() {
               transition={{ duration: 0.3 }}
               className="flex items-center space-x-2"
             >
-              <img src="/images/zero1ne-logo.png" alt="Zero One Logo" className="h-10" />
+              {/* <img src="https://zero1ne.com/theme/basic/img/main/logo_w.png" alt="Zero One Logo" className="h-10" /> */}
               <span className="text-[#0d5932] font-bold ml-2">ZERO ONE Inc.</span>
             </motion.div>
           </Link>
@@ -397,11 +397,11 @@ export default function ZeroOne() {
               >
                 <div className="relative mb-6 overflow-hidden rounded-lg h-40">
                   <motion.img
-                    src={`/images/solution-${solution.id}.jpg`}
+                    src={`https://placehold.co/600x400/0d5932/white?text=temp`}
                     alt={solution.title}
                     className="w-full h-full object-cover transition-transform duration-700 ease-in-out"
                     whileHover={{ scale: 1.05 }}
-                  />
+                  />{' '}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                     <div className="p-3">
                       <div className="text-3xl text-white mb-1">{solution.icon}</div>
@@ -498,7 +498,7 @@ export default function ZeroOne() {
               <div className="bg-[#0d5932]/5 rounded-xl overflow-hidden h-full flex flex-col">
                 <div className="relative h-56 overflow-hidden">
                   <motion.img
-                    src="/images/solution-system.jpg"
+                    src="https://placehold.co/600x400/0d5932/white?text=dambi"
                     alt="쓸모 식품 폐기물 자원화 시스템"
                     className="w-full h-full object-cover"
                     initial={{ scale: 1.1 }}
@@ -511,7 +511,7 @@ export default function ZeroOne() {
                         <div className="text-5xl mr-3">♻️</div>
                         <h3 className="text-2xl font-bold text-white">담비</h3>
                       </div>
-                      <p className="text-white/80 text-sm">식품 폐기물 자원화 시스템</p>
+                      <p className="text-white/80 text-sm">고속 감량기</p>
                     </div>
                   </div>
                 </div>
@@ -519,14 +519,12 @@ export default function ZeroOne() {
                 <div className="p-6 flex-grow">
                   <div className="space-y-4 mb-6">
                     <p className="text-gray-700 leading-relaxed">
-                      <strong>담비</strong>는 식품 폐기물을 고부가가치 자원으로 변환하는 제로원의 핵심 솔루션입니다.
-                      열분해 기술과 유용한 물질 추출 시스템을 통해 식품 폐기물에서 자원을 회수하고 친환경 비료로
-                      재탄생시킵니다.
+                      <strong>담비</strong>는 고객이 현장에서 직접 식품 폐기물을 처리할 수 있는 고속 감량기입니다. 기존
+                      건조 공정보다 두 배 빠른 감량 속도를 제공하며, 악취 없이 효율적으로 처리합니다.
                     </p>
                     <p className="text-gray-700 leading-relaxed">
-                      음식물 폐기물 처리 비용을 줄이고, 환경 규제를 준수하며, 탄소배출량을 감소시키는 완전한 폐기물 순환
-                      솔루션을 제공합니다. 제로원의 특허받은 열분해 기술은 메탄 발생을 차단하고 고품질 비료를
-                      생산합니다.
+                      폐기물 투입, 교반 및 가열, 수증기 응축, 건조된 폐기물 배출의 과정을 거치며, 잔열을 활용하여 에너지
+                      효율을 높이는 기술이 적용되었습니다. 운반 비용을 절감하고 친환경적인 처리 방식을 제공합니다.
                     </p>
                   </div>
 
@@ -549,63 +547,10 @@ export default function ZeroOne() {
                             ></path>
                           </svg>
                         </div>
-                        <span>위생적이고 빠르게 음식물 쓰레기 처리, 악취 없음</span>
-                      </motion.li>
-                      <motion.li
-                        className="flex items-start"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 }}
-                      >
-                        <div className="flex-shrink-0 h-6 w-6 rounded-full bg-[#0d5932]/10 flex items-center justify-center mr-3">
-                          <svg className="w-4 h-4 text-[#0d5932]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                            ></path>
-                          </svg>
-                        </div>
-                        <span>식품 폐기물을 유용한 자원으로 100% 전환</span>
-                      </motion.li>
-                      <motion.li
-                        className="flex items-start"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        <div className="flex-shrink-0 h-6 w-6 rounded-full bg-[#0d5932]/10 flex items-center justify-center mr-3">
-                          <svg className="w-4 h-4 text-[#0d5932]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                            ></path>
-                          </svg>
-                        </div>
-                        <span>레스토랑, 호텔, 식품 제조업체에 맞춤형 규모 제공</span>
+                        <span>현장에서 직접 식품 폐기물 고속 처리 가능</span>
                       </motion.li>
                     </ul>
                   </div>
-
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full py-2 px-4 bg-[#0d5932] text-white rounded-lg flex items-center justify-center gap-2 hover:bg-[#084526] transition-colors"
-                    onClick={openModal}
-                  >
-                    <span>도입 문의하기</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      ></path>
-                    </svg>
-                  </motion.button>
                 </div>
               </div>
             </motion.div>
@@ -620,7 +565,7 @@ export default function ZeroOne() {
               <div className="bg-[#0d5932]/5 rounded-xl overflow-hidden h-full flex flex-col">
                 <div className="relative h-56 overflow-hidden">
                   <motion.img
-                    src="/images/monitoring-system.jpg"
+                    src="https://placehold.co/600x400/0d5932/white?text=sseulmo"
                     alt="담비 환경 모니터링 시스템"
                     className="w-full h-full object-cover"
                     initial={{ scale: 1.1 }}
@@ -633,7 +578,7 @@ export default function ZeroOne() {
                         <div className="text-5xl mr-3">📊</div>
                         <h3 className="text-2xl font-bold text-white">쓸모</h3>
                       </div>
-                      <p className="text-white/80 text-sm">환경 모니터링 시스템</p>
+                      <p className="text-white/80 text-sm">위탁 처리 서비스</p>
                     </div>
                   </div>
                 </div>
@@ -641,14 +586,14 @@ export default function ZeroOne() {
                 <div className="p-6 flex-grow">
                   <div className="space-y-4 mb-6">
                     <p className="text-gray-700 leading-relaxed">
-                      <strong>쓸모</strong>는 식품 폐기물 처리 과정을 실시간으로 모니터링하고 데이터를 분석하는 환경
-                      모니터링 플랫폼입니다. 디지털 트윈 기술로 폐기물 발생부터 처리까지 전 과정을 추적하고, 최적의
-                      자원화 방안을 제시합니다.
+                      <strong>쓸모</strong>는 위탁 처리 서비스로, 고객이 감량 센터에서 식품 폐기물의 건조를 진행할 수
+                      있도록 지원하는 제로원의 핵심 솔루션입니다. 하루 만에 건조를 진행함으로써 부패를 최소화하고
+                      재활용률을 높일 수 있습니다.
                     </p>
                     <p className="text-gray-700 leading-relaxed">
-                      쓸모는 AI 기반 예측 모델을 통해 폐기물 발생량을 예측하고 맞춤형 처리 방안을 제안합니다.
-                      탄소배출량, 에너지 효율성, 친환경성 등 다양한 환경 데이터를 측정하여 ESG 성과 보고서를 자동으로
-                      생성합니다.
+                      밸류체인을 단순화하여 경제적 부담을 줄이고, 환경 규제를 준수하며, 탄소배출량을 감소시키는 완전한
+                      폐기물 순환 솔루션을 제공합니다. 제로원의 특허받은 열분해 기술은 메탄 발생을 차단하고 고품질
+                      비료를 생산합니다.
                     </p>
                   </div>
 
@@ -671,63 +616,10 @@ export default function ZeroOne() {
                             ></path>
                           </svg>
                         </div>
-                        <span>식품 폐기물 처리 과정의 실시간 모니터링 및 데이터 수집</span>
-                      </motion.li>
-                      <motion.li
-                        className="flex items-start"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2 }}
-                      >
-                        <div className="flex-shrink-0 h-6 w-6 rounded-full bg-[#0d5932]/10 flex items-center justify-center mr-3">
-                          <svg className="w-4 h-4 text-[#0d5932]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                            ></path>
-                          </svg>
-                        </div>
-                        <span>인공지능 기반 폐기물 발생량 예측 및 처리 최적화</span>
-                      </motion.li>
-                      <motion.li
-                        className="flex items-start"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 }}
-                      >
-                        <div className="flex-shrink-0 h-6 w-6 rounded-full bg-[#0d5932]/10 flex items-center justify-center mr-3">
-                          <svg className="w-4 h-4 text-[#0d5932]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                            ></path>
-                          </svg>
-                        </div>
-                        <span>환경 성과 데이터 측정과 ESG 맞춤형 보고서 생성</span>
+                        <span>위탁 처리 서비스를 통한 효율적인 폐기물 관리</span>
                       </motion.li>
                     </ul>
                   </div>
-
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full py-2 px-4 bg-[#0d5932] text-white rounded-lg flex items-center justify-center gap-2 hover:bg-[#084526] transition-colors"
-                    onClick={openModal}
-                  >
-                    <span>도입 문의하기</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      ></path>
-                    </svg>
-                  </motion.button>
                 </div>
               </div>
             </motion.div>
@@ -836,45 +728,34 @@ export default function ZeroOne() {
                 description:
                   '전문 컨설턴트와의 초기 상담을 통해 귀사의 폐기물 관리 현황과 요구사항을 파악합니다. 이 단계에서는 기초 데이터 수집과 목표 설정이 이루어집니다.',
                 icon: '💬',
-                image: '/images/consultation.jpg',
+                image: 'https://placehold.co/600x400/0d5932/white?text=consulting',
               },
               {
                 title: '현장 분석',
                 description:
                   '현장 방문을 통해 폐기물 발생량과 특성을 분석합니다. 전문 팀이 현장의 공간, 시설, 프로세스를 검토하고 최적의 솔루션 도입을 위한 준비를 진행합니다.',
                 icon: '🔍',
-                image: '/images/analysis.jpg',
+                image: 'https://placehold.co/600x400/0d5932/white?text=analysis',
               },
               {
                 title: '맞춤형 솔루션 제안',
                 description:
                   '분석 결과를 바탕으로 맞춤형 솔루션을 제안합니다. 식품 폐기물 처리량, 공간 제약, 예산 등을 고려하여 최적화된 제품과 서비스 조합을 제시합니다.',
                 icon: '📋',
-                image: '/images/solution-proposal.jpg',
+                image: 'https://placehold.co/600x400/0d5932/white?text=solution',
               },
               {
                 title: '도입 및 사후관리',
                 description:
                   '솔루션 도입 후에도 정기적인 모니터링과 기술 지원을 제공합니다. 지속적인 데이터 분석을 통해 성과를 측정하고 필요시 최적화 방안을 제안합니다.',
                 icon: '🔄',
-                image: '/images/implementation.jpg',
+                image: 'https://placehold.co/600x400/0d5932/white?text=after',
               },
             ].map((step, index) => (
               <div
                 key={index}
                 className={`flex flex-col md:flex-row items-center md:items-start gap-8 mb-16 md:mb-24 relative ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
               >
-                {/* 타임라인 노드 */}
-                <motion.div
-                  className="w-16 h-16 rounded-full bg-[#0d5932] text-white flex items-center justify-center text-xl z-10 shrink-0 md:absolute md:left-1/2 md:-translate-x-1/2"
-                  initial={{ scale: 0, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <div className="text-2xl">{step.icon}</div>
-                </motion.div>
-
                 {/* 내용 */}
                 <div className={`md:w-5/12 ${index % 2 === 1 ? 'md:text-right' : ''}`}>
                   <motion.div
@@ -936,7 +817,7 @@ export default function ZeroOne() {
               transition={{ duration: 0.5 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-3 bg-[#0d5932] text-white font-medium rounded-lg shadow-md hover:bg-[#084526] transition-all"
+              className="px-8 py-3 bg-[#0d5932] text-white font-medium rounded-lg shadow-md hover:bg-[#084526] transition-colors shadow-md"
               onClick={openModal}
             >
               지금 시작하기
@@ -1080,7 +961,7 @@ export default function ZeroOne() {
             >
               Contact
             </motion.h2>
-            <motion.p
+            {/* <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -1089,7 +970,7 @@ export default function ZeroOne() {
             >
               폐기물 처리 비용 절감, 환경 영향 최소화, ESG 점수 향상을 위한 제로원의 솔루션에 대해 문의하세요. 24시간
               이내 답변드립니다.
-            </motion.p>
+            </motion.p> */}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
@@ -1113,7 +994,7 @@ export default function ZeroOne() {
                     </div>
                     <div>
                       <p className="text-gray-800 font-medium text-lg">주소</p>
-                      <p className="text-gray-600">서울특별시 강남구 테헤란로 123, 제로원 빌딩 10층</p>
+                      <p className="text-gray-600">충청북도 청주시 청원구 오창읍 양청송대길 10, 308호</p>
                     </div>
                   </div>
                 </div>
@@ -1133,8 +1014,8 @@ export default function ZeroOne() {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-gray-800 font-medium text-lg">전화</p>
-                      <p className="text-gray-600">02-123-4567</p>
+                      <p className="text-gray-800 font-medium text-lg">Fax</p>
+                      <p className="text-gray-600">0303-3441-0101</p>
                     </div>
                   </div>
                 </div>
@@ -1156,7 +1037,7 @@ export default function ZeroOne() {
                     </div>
                     <div>
                       <p className="text-gray-800 font-medium text-lg">이메일</p>
-                      <p className="text-gray-600">contact@zeroone.com</p>
+                      <p className="text-gray-600">zerone.khk@gmail.com</p>
                     </div>
                   </div>
                 </div>
@@ -1191,7 +1072,7 @@ export default function ZeroOne() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
               <h3 className="text-xl font-bold text-white mb-4">ZERO ONE Inc.</h3>
-              <p className="mb-4">자연과 과기술이 공존하는 길, 유기성 폐기물 자원화 연구기업 제로원이 동행합니다.</p>
+              <p className="mb-4">자연과 기술이 공존하는 길, 유기성 폐기물 자원화 제로원이 동행합니다.</p>
             </div>
 
             <div>
@@ -1209,9 +1090,9 @@ export default function ZeroOne() {
 
             <div>
               <h3 className="text-lg font-semibold text-white mb-4">연락처</h3>
-              <p className="mb-2">서울특별시 강남구 테헤란로 123, 제로원 빌딩 10층</p>
-              <p className="mb-2">02-123-4567</p>
-              <p className="mb-4">contact@zeroone.com</p>
+              <p className="mb-2">충청북도 청주시 청원구 오창읍 양청송대길 10, 308호</p>
+              <p className="mb-2">0303-3441-0101</p>
+              <p className="mb-4">zerone.khk@gmail.com</p>
 
               <div className="flex space-x-4">
                 {['facebook', 'twitter', 'instagram', 'linkedin'].map((social, index) => (
