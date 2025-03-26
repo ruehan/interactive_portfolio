@@ -89,13 +89,13 @@ export default function ProjectDetail() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
+    <div className="min-h-screen bg-white dark:bg-slate-900 text-gray-900 dark:text-white">
       {/* 헤더 섹션 */}
       <div
         className="h-80 md:h-96 bg-cover bg-center relative"
         style={{ backgroundImage: `url(${project.heroImage || project.thumbnail})` }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+        <div className="absolute inset-0 bg-black bg-opacity-40 dark:bg-opacity-60 flex items-center justify-center">
           <div className="container mx-auto px-6">
             <Link to="/projects" className="text-white hover:text-blue-400 flex items-center mb-8">
               <FaArrowLeft className="mr-2" /> 모든 프로젝트
@@ -120,10 +120,12 @@ export default function ProjectDetail() {
       {/* 프로젝트 콘텐츠 */}
       <div className="container mx-auto px-6 py-12">
         {/* 프로젝트 정보 탭 */}
-        <div className="flex flex-wrap border-b border-gray-700 mb-8">
+        <div className="flex flex-wrap border-b border-gray-200 dark:border-gray-700 mb-8">
           <button
             className={`px-4 py-2 font-medium ${
-              activeTab === 'overview' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-gray-400'
+              activeTab === 'overview'
+                ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400'
+                : 'text-gray-600 dark:text-gray-400'
             }`}
             onClick={() => setActiveTab('overview')}
           >
@@ -131,7 +133,9 @@ export default function ProjectDetail() {
           </button>
           <button
             className={`px-4 py-2 font-medium ${
-              activeTab === 'technical' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-gray-400'
+              activeTab === 'technical'
+                ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400'
+                : 'text-gray-600 dark:text-gray-400'
             }`}
             onClick={() => setActiveTab('technical')}
           >
@@ -139,7 +143,9 @@ export default function ProjectDetail() {
           </button>
           <button
             className={`px-4 py-2 font-medium ${
-              activeTab === 'challenges' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-gray-400'
+              activeTab === 'challenges'
+                ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400'
+                : 'text-gray-600 dark:text-gray-400'
             }`}
             onClick={() => setActiveTab('challenges')}
           >
@@ -147,7 +153,9 @@ export default function ProjectDetail() {
           </button>
           <button
             className={`px-4 py-2 font-medium ${
-              activeTab === 'outcome' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-gray-400'
+              activeTab === 'outcome'
+                ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400'
+                : 'text-gray-600 dark:text-gray-400'
             }`}
             onClick={() => setActiveTab('outcome')}
           >
@@ -172,7 +180,7 @@ export default function ProjectDetail() {
               >
                 <img src={image.url} alt={image.alt} className="w-full h-full object-cover" />
                 {image.caption && (
-                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-2 text-sm">
+                  <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 p-2 text-sm text-white">
                     {image.caption}
                   </div>
                 )}
@@ -183,7 +191,7 @@ export default function ProjectDetail() {
             {project.images.map((image, index) => (
               <button
                 key={index}
-                className={`w-3 h-3 rounded-full ${index === currentImageIndex ? 'bg-blue-500' : 'bg-gray-600'}`}
+                className={`w-3 h-3 rounded-full ${index === currentImageIndex ? 'bg-blue-500' : 'bg-gray-300 dark:bg-gray-600'}`}
                 onClick={() => changeImageIndex(index)}
               />
             ))}
@@ -199,7 +207,7 @@ export default function ProjectDetail() {
                 setSelectedVideo(project.videos![0]);
                 setIsVideoModalOpen(true);
               }}
-              className="flex items-center bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
+              className="flex items-center bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors text-white"
             >
               <FaPlay className="mr-2" /> 데모 영상 보기
             </button>
@@ -218,7 +226,7 @@ export default function ProjectDetail() {
                 setSelectedVideo(dummyVideo);
                 setIsVideoModalOpen(true);
               }}
-              className="flex items-center bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
+              className="flex items-center bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors text-white"
             >
               <FaPlay className="mr-2" /> 데모 보기
             </button>
@@ -229,7 +237,7 @@ export default function ProjectDetail() {
               href={project.links.find(link => link.type === 'github')?.url}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg transition-colors"
+              className="flex items-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors text-gray-800 dark:text-gray-200"
             >
               <FaGithub className="mr-2" /> 소스 코드
             </a>
@@ -243,7 +251,7 @@ export default function ProjectDetail() {
                 href={link.url}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg transition-colors"
+                className="flex items-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors text-gray-800 dark:text-gray-200"
               >
                 <FaExternalLinkAlt className="mr-2" /> {link.label}
               </a>
@@ -251,29 +259,29 @@ export default function ProjectDetail() {
         </div>
 
         {/* 탭 콘텐츠 */}
-        <div className="bg-slate-800 rounded-lg p-6">
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
           {activeTab === 'overview' && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <h2 className="text-2xl font-bold mb-4">프로젝트 개요</h2>
-              <p className="mb-6 text-gray-300">{project.overview}</p>
+              <p className="mb-6 text-gray-700 dark:text-gray-300">{project.overview}</p>
 
               <h3 className="text-xl font-bold mb-3">개발 동기</h3>
-              <p className="mb-6 text-gray-300">{project.motivation}</p>
+              <p className="mb-6 text-gray-700 dark:text-gray-300">{project.motivation}</p>
 
               <h3 className="text-xl font-bold mb-3">프로젝트 목표</h3>
-              <ul className="list-disc pl-5 mb-6 space-y-2 text-gray-300">
+              <ul className="list-disc pl-5 mb-6 space-y-2 text-gray-700 dark:text-gray-300">
                 {project.goals.map((goal, index) => (
                   <li key={index}>{goal}</li>
                 ))}
               </ul>
 
               <h3 className="text-xl font-bold mb-3">담당 역할</h3>
-              <p className="text-gray-300">{project.role}</p>
+              <p className="text-gray-700 dark:text-gray-300">{project.role}</p>
 
               {project.team && project.team.length > 0 && (
                 <>
                   <h3 className="text-xl font-bold mt-6 mb-3">팀 구성</h3>
-                  <ul className="list-disc pl-5 text-gray-300">
+                  <ul className="list-disc pl-5 text-gray-700 dark:text-gray-300">
                     {project.team.map((member, index) => (
                       <li key={index}>{member}</li>
                     ))}
@@ -288,47 +296,47 @@ export default function ProjectDetail() {
               <h2 className="text-2xl font-bold mb-4">기술 상세</h2>
 
               <h3 className="text-xl font-bold mb-3">아키텍처</h3>
-              <p className="mb-6 text-gray-300">{project.architecture}</p>
+              <p className="mb-6 text-gray-700 dark:text-gray-300">{project.architecture}</p>
 
               {project.technical_details.frontend && (
                 <>
                   <h3 className="text-xl font-bold mb-3">프론트엔드</h3>
-                  <p className="mb-6 text-gray-300">{project.technical_details.frontend}</p>
+                  <p className="mb-6 text-gray-700 dark:text-gray-300">{project.technical_details.frontend}</p>
                 </>
               )}
 
               {project.technical_details.backend && (
                 <>
                   <h3 className="text-xl font-bold mb-3">백엔드</h3>
-                  <p className="mb-6 text-gray-300">{project.technical_details.backend}</p>
+                  <p className="mb-6 text-gray-700 dark:text-gray-300">{project.technical_details.backend}</p>
                 </>
               )}
 
               {project.technical_details.database && (
                 <>
                   <h3 className="text-xl font-bold mb-3">데이터베이스</h3>
-                  <p className="mb-6 text-gray-300">{project.technical_details.database}</p>
+                  <p className="mb-6 text-gray-700 dark:text-gray-300">{project.technical_details.database}</p>
                 </>
               )}
 
               {project.technical_details.deployment && (
                 <>
                   <h3 className="text-xl font-bold mb-3">배포</h3>
-                  <p className="mb-6 text-gray-300">{project.technical_details.deployment}</p>
+                  <p className="mb-6 text-gray-700 dark:text-gray-300">{project.technical_details.deployment}</p>
                 </>
               )}
 
               {project.technical_details.other && (
                 <>
                   <h3 className="text-xl font-bold mb-3">기타 기술</h3>
-                  <p className="mb-6 text-gray-300">{project.technical_details.other}</p>
+                  <p className="mb-6 text-gray-700 dark:text-gray-300">{project.technical_details.other}</p>
                 </>
               )}
 
               <h3 className="text-xl font-bold mb-3">사용 기술</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {project.technologies.map((tech, index) => (
-                  <div key={index} className="bg-slate-700 rounded-lg p-4">
+                  <div key={index} className="bg-white dark:bg-gray-700 rounded-lg p-4 shadow-sm">
                     <div className="flex items-center mb-2">
                       <div className="w-8 h-8 mr-3 flex items-center justify-center">
                         <img src={`/images/tech/${tech.icon}`} alt={tech.name} className="max-w-full max-h-full" />
@@ -337,7 +345,7 @@ export default function ProjectDetail() {
                         {tech.name}
                       </h4>
                     </div>
-                    <p className="text-sm text-gray-300">{tech.description}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{tech.description}</p>
                   </div>
                 ))}
               </div>
@@ -350,15 +358,15 @@ export default function ProjectDetail() {
 
               <div className="space-y-8">
                 {project.challenges.map((challenge, index) => (
-                  <div key={index} className="bg-slate-700 rounded-lg p-6">
+                  <div key={index} className="bg-white dark:bg-gray-700 rounded-lg p-6 shadow-sm">
                     <h3 className="text-xl font-bold mb-3">{challenge.title}</h3>
                     <div className="mb-4">
-                      <h4 className="font-bold text-red-400 mb-2">문제</h4>
-                      <p className="text-gray-300">{challenge.description}</p>
+                      <h4 className="font-bold text-red-600 dark:text-red-400 mb-2">문제</h4>
+                      <p className="text-gray-700 dark:text-gray-300">{challenge.description}</p>
                     </div>
                     <div>
-                      <h4 className="font-bold text-green-400 mb-2">해결책</h4>
-                      <p className="text-gray-300">{challenge.solution}</p>
+                      <h4 className="font-bold text-green-600 dark:text-green-400 mb-2">해결책</h4>
+                      <p className="text-gray-700 dark:text-gray-300">{challenge.solution}</p>
                     </div>
                   </div>
                 ))}
@@ -369,12 +377,12 @@ export default function ProjectDetail() {
           {activeTab === 'outcome' && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <h2 className="text-2xl font-bold mb-4">결과 및 성과</h2>
-              <p className="mb-6 text-gray-300">{project.outcome}</p>
+              <p className="mb-6 text-gray-700 dark:text-gray-300">{project.outcome}</p>
 
               {project.achievements && project.achievements.length > 0 && (
                 <>
                   <h3 className="text-xl font-bold mb-3">주요 성과</h3>
-                  <ul className="list-disc pl-5 mb-6 space-y-2 text-gray-300">
+                  <ul className="list-disc pl-5 mb-6 space-y-2 text-gray-700 dark:text-gray-300">
                     {project.achievements.map((achievement, index) => (
                       <li key={index}>{achievement}</li>
                     ))}
@@ -387,9 +395,9 @@ export default function ProjectDetail() {
                   <h3 className="text-xl font-bold mb-3">주요 지표</h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                     {Object.entries(project.metrics).map(([key, value], index) => (
-                      <div key={index} className="bg-slate-700 rounded-lg p-4 text-center">
-                        <div className="text-2xl font-bold text-blue-400">{value}</div>
-                        <div className="text-sm text-gray-300">{key}</div>
+                      <div key={index} className="bg-white dark:bg-gray-700 rounded-lg p-4 text-center shadow-sm">
+                        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{value}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300">{key}</div>
                       </div>
                     ))}
                   </div>
@@ -397,12 +405,12 @@ export default function ProjectDetail() {
               )}
 
               <h3 className="text-xl font-bold mb-3">배운 점</h3>
-              <p className="mb-6 text-gray-300">{project.learnings}</p>
+              <p className="mb-6 text-gray-700 dark:text-gray-300">{project.learnings}</p>
 
               {project.future_improvements && project.future_improvements.length > 0 && (
                 <>
                   <h3 className="text-xl font-bold mb-3">향후 개선 사항</h3>
-                  <ul className="list-disc pl-5 space-y-2 text-gray-300">
+                  <ul className="list-disc pl-5 space-y-2 text-gray-700 dark:text-gray-300">
                     {project.future_improvements.map((improvement, index) => (
                       <li key={index}>{improvement}</li>
                     ))}
