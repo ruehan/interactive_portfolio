@@ -8,6 +8,7 @@ import {
   useMatches,
   isRouteErrorResponse,
   useRouteError,
+  useLocation,
 } from '@remix-run/react';
 import type { LinksFunction, LoaderFunctionArgs } from '@remix-run/node';
 import { json, createCookieSessionStorage } from '@remix-run/node';
@@ -164,11 +165,19 @@ function EasterEggInitializer() {
 function ThemeHydration() {
   const { theme: initialTheme } = useLoaderData<typeof loader>();
   const setTheme = useThemeStore(state => state.setTheme);
+  const location = useLocation();
+  const isZero1nePage = location.pathname === '/zero1ne';
 
   useEffect(() => {
-    setTheme(initialTheme);
+    if (isZero1nePage) {
+      // zero1ne 페이지에서는 항상 라이트 테마 적용
+      setTheme('light');
+    } else {
+      // 다른 페이지에서는 기존 테마 유지
+      setTheme(initialTheme);
+    }
     useThemeStore.persist.rehydrate();
-  }, [initialTheme, setTheme]);
+  }, [initialTheme, setTheme, isZero1nePage]);
 
   return null;
 }

@@ -11,6 +11,8 @@ export const meta: MetaFunction = () => {
     { property: 'og:title', content: 'ZERO ONE Inc. | 자연과 기술이 공존하는 길' },
     { property: 'og:description', content: '유기성 폐기물 자원화 제로원이 동행합니다' },
     { property: 'og:type', content: 'website' },
+    { name: 'color-scheme', content: 'light only' },
+    { name: 'theme-color', content: '#ffffff' },
   ];
 };
 
